@@ -33,12 +33,14 @@ bot.on('message', function onMessage(msg) {
         const index = chatIds.indexOf(msg.chat.id);
         if (index === -1) {
             chatIds.push( msg.chat.id );
+            console.log(`New chat id '${msg.chat.id}' was added`);
         }
         bot.sendMessage(msg.chat.id, 'OK. You added to list of recipients');
     } else if(msg.text === 'no') {
         const index = chatIds.indexOf(msg.chat.id);
         if (index >= 0) {
             chatIds.splice( index, 1 );
+            console.log(`Chat id '${msg.chat.id}' was removed`);
         }
         bot.sendMessage(msg.chat.id, 'OK. You removed from list of recipients');
     }
