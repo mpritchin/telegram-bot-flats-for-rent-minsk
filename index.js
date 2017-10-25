@@ -4,7 +4,7 @@
  */
 
 
-const TOKEN = process.env.TELEGRAM_TOKEN || '469252955:AAFTI6n6nhwAi5WnUJhivyMa0QEqAPsW7Zw';
+const TOKEN = process.env.TELEGRAM_TOKEN;
 const TelegramBot = require('node-telegram-bot-api');
 const options = {
     webHook: {
@@ -20,7 +20,7 @@ const options = {
 // Add URL of your app to env variable or enable Dyno Metadata
 // to get this automatically
 // See: https://devcenter.heroku.com/articles/dyno-metadata
-const url = process.env.APP_URL || 'https://fast-dusk-89332.herokuapp.com:443';
+const url = process.env.APP_URL;
 const bot = new TelegramBot(TOKEN, options);
 
 
