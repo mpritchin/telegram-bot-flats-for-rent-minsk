@@ -29,6 +29,7 @@ const chatIds = [];
 // Just to ping!
 bot.on('message', function onMessage(msg) {
     bot.sendMessage(msg.chat.id, 'Do you want to know all new offers rent for flats in Minsk?');
+    console.log(`${msg.chat.id}:${msg.text}`);
     if(msg.text === 'yes') {
         const index = chatIds.indexOf(msg.chat.id);
         if (index === -1) {
@@ -53,7 +54,7 @@ function pingFlats() {
         const newFeatures = lodash.differenceBy(points.features, oldFeatures, 'id');
         console.log(`Found new flats: ${JSON.stringify(newFeatures.map(f => f.id))}`);
         console.log(`ChatIds: ${chatIds}`);
-        if(newFeatures && newFeatures.length > 0 && chatIds.length > 0) {
+        if(oldFeatures.length > 0 && newFeatures.length > 0 && chatIds.length > 0) {
                 newFeatures.forEach(feature => {
                     chatIds.forEach(chatId => {
                         bot.sendMessage(chatId, `https://r.onliner.by/ak/apartments/${feature.id}`);
