@@ -1,11 +1,7 @@
-/**
- * This example demonstrates setting up webhook
- * on the Heroku platform.
- */
-
-
-const TOKEN = process.env.TELEGRAM_TOKEN;
 const TelegramBot = require('node-telegram-bot-api');
+const lodash = require('lodash');
+const getFlatsFromOnliner = require('./src/getFlatsFromOnliner');
+const TOKEN = process.env.TELEGRAM_TOKEN;
 const options = {
     webHook: {
         // Port to which you should bind is assigned to $PORT variable
@@ -28,8 +24,42 @@ const bot = new TelegramBot(TOKEN, options);
 // Note: we do not need to pass in the cert, as it already provided
 bot.setWebHook(`${url}/bot${TOKEN}`);
 
+const chatIds = [];
 
 // Just to ping!
 bot.on('message', function onMessage(msg) {
-    bot.sendMessage(msg.chat.id, 'I am alive on Heroku!');
+    bot.sendMessage(msg.chat.id, 'Do you want to know all new offers rent for flats in Minsk?');
+    if(msg.message.text === 'yes') {
+        const index = chatIds.indexOf(msg.chat.id);
+        if (index === -1) {
+            chatIds.push( msg.chat.id );
+        }
+        bot.sendMessage(chatId, 'OK. You added to list of recipients');
+    } else if(msg.message.text === 'no') {
+        const index = chatIds.indexOf(msg.chat.id);
+        if (index >= 0) {
+            chatIds.splice( index, 1 );
+        }
+        bot.sendMessage(chatId, 'OK. You removed from list of recipients');
+    }
 });
+
+let oldFeatures = [];
+
+function pingFlats() {
+    getFlatsFromOnliner().then((points) => {
+        const newFeatures = lodash(points.features, oldFeatures, 'id');
+        console.log(`Found new flats: ${newFeatures}`);
+        if(newFeatures && newFeatures.length > 0 && chatIds.length > 0) {
+                newFeatures.forEach(feature => {
+                    chatIds.forEach(chatId => {
+                        bot.sendMessage(chatId, `https://r.onliner.by/ak/apartments/${feature.id}`);
+                    });
+                });
+        }
+        oldFeatures = points.features;
+        setTimeout(pingFlats, 60000)
+    });
+}
+
+pingFlats();
