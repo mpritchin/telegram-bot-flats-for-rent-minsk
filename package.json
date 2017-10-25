@@ -1,0 +1,27 @@
+{
+  "name": "telegram-bot-flats-for-rent-minsk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpritchin/telegram-bot-flats-for-rent-minsk.git"
+  },
+  "keywords": [
+    "minsk",
+    "flat",
+    "rent"
+  ],
+  "author": "Michael Pritchin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpritchin/telegram-bot-flats-for-rent-minsk/issues"
+  },
+  "homepage": "https://github.com/mpritchin/telegram-bot-flats-for-rent-minsk#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "0.29.0"
+  }
+}
