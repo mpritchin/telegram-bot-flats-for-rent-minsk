@@ -51,7 +51,7 @@ let oldFeatures = [];
 function pingFlats() {
     getFlatsFromOnliner().then((points) => {
         const newFeatures = lodash.differenceBy(points.features, oldFeatures, 'id');
-        console.log(`Found new flats: ${JSON.stringify(newFeatures)}`);
+        console.log(`Found new flats: ${JSON.stringify(newFeatures.map(f => f.id))}`);
         console.log(`ChatIds: ${chatIds}`);
         if(newFeatures && newFeatures.length > 0 && chatIds.length > 0) {
                 newFeatures.forEach(feature => {
