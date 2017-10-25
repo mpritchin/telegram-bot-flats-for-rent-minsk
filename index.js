@@ -29,13 +29,13 @@ const chatIds = [];
 // Just to ping!
 bot.on('message', function onMessage(msg) {
     bot.sendMessage(msg.chat.id, 'Do you want to know all new offers rent for flats in Minsk?');
-    if(msg.message.text === 'yes') {
+    if(msg.text === 'yes') {
         const index = chatIds.indexOf(msg.chat.id);
         if (index === -1) {
             chatIds.push( msg.chat.id );
         }
         bot.sendMessage(chatId, 'OK. You added to list of recipients');
-    } else if(msg.message.text === 'no') {
+    } else if(msg.text === 'no') {
         const index = chatIds.indexOf(msg.chat.id);
         if (index >= 0) {
             chatIds.splice( index, 1 );
