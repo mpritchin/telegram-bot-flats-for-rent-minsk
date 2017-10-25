@@ -34,13 +34,13 @@ bot.on('message', function onMessage(msg) {
         if (index === -1) {
             chatIds.push( msg.chat.id );
         }
-        bot.sendMessage(chatId, 'OK. You added to list of recipients');
+        bot.sendMessage(msg.chat.id, 'OK. You added to list of recipients');
     } else if(msg.text === 'no') {
         const index = chatIds.indexOf(msg.chat.id);
         if (index >= 0) {
             chatIds.splice( index, 1 );
         }
-        bot.sendMessage(chatId, 'OK. You removed from list of recipients');
+        bot.sendMessage(msg.chat.id, 'OK. You removed from list of recipients');
     }
 });
 
