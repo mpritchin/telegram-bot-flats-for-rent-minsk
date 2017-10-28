@@ -1,0 +1,5 @@
+module.exports = [
+    "https://ak.api.onliner.by/search/points?rent_type%5B%5D=1_room&rent_type%5B%5D=2_rooms&price%5Bmin%5D=190&price%5Bmax%5D=400&currency=usd&limit=750&bounds%5Blb%5D%5Blat%5D=53.872592784685054&bounds%5Blb%5D%5Blong%5D=27.511926919790703&bounds%5Brt%5D%5Blat%5D=53.88605177925347&bounds%5Brt%5D%5Blong%5D=27.566827008287955",
+    "https://ak.api.onliner.by/search/points?rent_type%5B%5D=1_room&rent_type%5B%5D=2_rooms&price%5Bmin%5D=190&price%5Bmax%5D=400&currency=usd&limit=750&bounds%5Blb%5D%5Blat%5D=53.89203216406581&bounds%5Blb%5D%5Blong%5D=27.4691256659623&bounds%5Brt%5D%5Blat%5D=53.91441267450203&bounds%5Brt%5D%5Blong%5D=27.52402575445951",
+    "https://ak.api.onliner.by/search/points?rent_type%5B%5D=1_room&rent_type%5B%5D=2_rooms&price%5Bmin%5D=190&price%5Bmax%5D=400&currency=usd&limit=750&bounds%5Blb%5D%5Blat%5D=53.86281216549223&bounds%5Blb%5D%5Blong%5D=27.47667117575576&bounds%5Brt%5D%5Blat%5D=53.88520832280604&bounds%5Brt%5D%5Blong%5D=27.531571264252975"
+];

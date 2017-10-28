@@ -50,8 +50,8 @@ bot.on('message', function onMessage(msg) {
 let oldFeatures = [];
 
 function pingFlats() {
-    getFlatsFromOnliner().then((points) => {
-        const newFeatures = lodash.differenceBy(points.features, oldFeatures, 'id');
+    getFlatsFromOnliner().then((features) => {
+        const newFeatures = lodash.differenceBy(features, oldFeatures, 'id');
         console.log(`Found new flats: ${JSON.stringify(newFeatures.map(f => f.id))}`);
         console.log(`ChatIds: ${chatIds}`);
         if(oldFeatures.length > 0 && newFeatures.length > 0 && chatIds.length > 0) {
@@ -61,7 +61,7 @@ function pingFlats() {
                     });
                 });
         }
-        oldFeatures = points.features;
+        oldFeatures = features;
         setTimeout(pingFlats, 60000)
     });
 }
