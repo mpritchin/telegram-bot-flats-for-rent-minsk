@@ -26,6 +26,10 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 
 const chatIds = [];
 
+if(process.env.DEFAULT_CHAT_ID) {
+    chatIds.push(process.env.DEFAULT_CHAT_ID);
+}
+
 // Just to ping!
 bot.on('message', function onMessage(msg) {
     bot.sendMessage(msg.chat.id, 'Do you want to know all new offers rent for flats in Minsk?');
