@@ -6,7 +6,7 @@ const onlinerFlatsUrls = require('./onlinerFlatsUrls');
 function getFeatures(url) {
     return axios.get(url)
         .then(response => response.data)
-        .then(points => points && points.features ? points.features : []);
+        .then(points => points && points.apartments ? points.apartments : []);
 }
 
 function getFlatsFromOnliner() {

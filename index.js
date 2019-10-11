@@ -51,21 +51,54 @@ bot.on('message', function onMessage(msg) {
     }
 });
 
-let oldFeatures = [];
+let oldFlats = [];
 
 function pingFlats() {
-    getFlatsFromOnliner().then((features) => {
-        const newFeatures = lodash.differenceBy(features, oldFeatures, 'id');
-        console.log(`Found new flats: ${JSON.stringify(newFeatures.map(f => f.id))}`);
-        console.log(`ChatIds: ${chatIds}`);
-        if(oldFeatures.length > 0 && newFeatures.length > 0 && chatIds.length > 0) {
-                newFeatures.forEach(feature => {
-                    chatIds.forEach(chatId => {
-                        bot.sendMessage(chatId, `https://r.onliner.by/ak/apartments/${feature.id}`);
-                    });
+    getFlatsFromOnliner().then((flats) => {
+        console.log(`Flats found: ${flats.length}`);
+        const newFlats = lodash.differenceBy(flats, oldFlats, 'id');
+        const removedFlats = lodash.differenceBy(oldFlats, flats, 'id');
+        const flatsWithChangedPrice = flats.filter(flat => {
+            const oldFlat = lodash.find(oldFlats, {id: flat.id});
+            if(!oldFlat) {
+                return false
+            }
+            try {
+                return oldFlat.price.amount !== flat.price.amount
+            } catch (e) {
+                console.error(e);
+                return false
+            }
+        });
+        console.log(`ChatIds count: ${chatIds.length}`);
+        console.log(`Found new flats count: ${newFlats.length}`);
+        if (oldFlats.length > 0 && newFlats.length > 0 && chatIds.length > 0) {
+            newFlats.forEach(feature => {
+                chatIds.forEach(chatId => {
+                    bot.sendMessage(chatId, `New flat: https://r.onliner.by/pk/apartments/${feature.id}`);
                 });
+            });
         }
-        oldFeatures = features;
+
+        console.log(`Found changed price flats count: ${flatsWithChangedPrice.length}`);
+        if (flatsWithChangedPrice.length > 0 && chatIds.length > 0) {
+            flatsWithChangedPrice.forEach(flat => {
+                const oldFlat = lodash.find(oldFlats, {id: flat.id})
+                chatIds.forEach(chatId => {
+                    bot.sendMessage(chatId, `Changed price => https://r.onliner.by/pk/apartments/${flat.id} price ${oldFlat.price.amount} => ${flat.price.amount}`);
+                });
+            });
+        }
+
+        console.log(`Found removed flats count: ${removedFlats.length}`);
+        if (removedFlats.length > 0 && chatIds.length > 0) {
+            removedFlats.forEach(flat => {
+                chatIds.forEach(chatId => {
+                    bot.sendMessage(chatId, `Removed flat => ${JSON.stringify(flat)}`);
+                });
+            });
+        }
+        oldFlats = flats;
         setTimeout(pingFlats, 60000)
     });
 }
